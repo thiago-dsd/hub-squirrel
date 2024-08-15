@@ -25,3 +25,23 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Hub Squirrel
+
+- [Mockup]()
+
+### 📚 Production urls
+
+- **<https://api.newschool.app>** || User interactions and characteristics
+
+### 🛠️ Stack
+
+- **GetIt** for dependency injection
+
+### 📝 Versions
+
+- **Angular CLI** 3.2.6
+
+#
+
+Made with ❤️ by **Hub Squirrel**

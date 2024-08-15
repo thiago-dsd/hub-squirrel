@@ -23,7 +23,7 @@ export const routes: Routes = [
     },
     {
         path: '',
-        redirectTo: "model",
+        redirectTo: "contacts",
         pathMatch: 'full',
     },
 ];
