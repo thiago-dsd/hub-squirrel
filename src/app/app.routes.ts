@@ -3,6 +3,7 @@ import { ContactsComponent } from './contacts/contacts.component';
 import { CampaignsComponent } from './campaigns/campaigns.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { ModelComponent } from './model/model.component';
+import { LoginComponent } from './login/login.component';
 
 export const routes: Routes = [
     {
@@ -22,8 +23,12 @@ export const routes: Routes = [
         component: ModelComponent,
     },
     {
+        path: 'login',
+        component: LoginComponent,
+    },
+    {
         path: '',
-        redirectTo: "contacts",
+        redirectTo: "login",
         pathMatch: 'full',
     },
 ];

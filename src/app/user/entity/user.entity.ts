@@ -1,0 +1,46 @@
+import { AuditCamelCase } from "../../commons/entity/audit.entity";
+import { EscolarityEnum } from "../../auth/enum/escolarity.enum";
+import { GenderEnum } from "../../auth/enum/gender.enum";
+import { UserProfileEnum } from "../../auth/enum/user-profile.enum";
+import { Role } from "../../auth/entity/role.entity";
+
+export interface User extends AuditCamelCase {
+    id: string;
+    name: string;
+    password?: string;
+    salt?: string;
+    daily_goal: number;
+    email?: string;
+    profile: UserProfileEnum;
+    photoPath?: string;
+    nickname?: string;
+    birthday?: Date;
+    gender?: GenderEnum;
+    schooling?: EscolarityEnum;
+    institutionName?: string;
+    profession?: string;
+    address?: string;
+    city?: string;
+    cep?: string;
+    complement?: string;
+    houseNumber?: string;
+    phone?: string;
+    state?: string;
+    country?: string;
+    neighborhood?: string;
+    street?: string;
+    point?: string;
+    urlFacebook?: string;
+    urlInstagram?: string;
+    uid?: string;
+    inviteKey: string;
+    invitedByUserId?: string;
+    invitedBy?: User;
+    first_access: boolean;
+    facebookId?: string;
+    googleSub?: string;
+    cpf?: string;
+    deleted: boolean;
+    deletedAt: Date;
+    role: Role;
+}
