@@ -1,0 +1,66 @@
+export class ControllerConstants {
+    static API_PREFIX = "api";
+
+    static API_VERSION_1 = "v1";
+    static API_VERSION_2 = "v2";
+
+    static OAUTH_ENDPOINT = "oauth";
+    static USER_ENDPOINT = "user";
+    static ADMIN_PREFIX = "admin";
+    static COURSE_TAKEN_ENDPOINT = "course-taken";
+    static DASHBOARD_ENDPOINT = "dashboard";
+    static COURSE_ENDPOINT = "course";
+    static COMMENT_ENDPOINT = "comment";
+    static LESSON_ENDPOINT = "lesson";
+    static PART_ENDPOINT = "part";
+    static TEST_ENDPOINT = "test";
+    static SCHOOL_ENDPOINT = "school";
+    static GAMEFICATION_ENDPOINT = "gamefication";
+    static BALANCE_ENDPOINT = "balance";
+    static PILAR_ENDPOINT = "pilar";
+    static TRAIL_ENDPOINT = "trail";
+    static HIGHLIGHT_ENDPOINT = "highlight";
+    static UPLOAD_ENDPOINT = "upload";
+    static MESSAGE_ENDPOINT = "message";
+    static NOTIFICATION_ENDPOINT = "notification";
+    static FIREBASE_ENDPOINT = "firebase";
+    static REGISTRATION_TOKEN_ENDPOINT = "registration-token";
+    static CITY_ENDPOINT = "city";
+    static DEVICE_ENDPOINT = "device";
+    static STATE_ENDPOINT = "state";
+    static FRIENDSHIP_ENDPOINT = "friendship";
+    static GOAL_ENDPOINT = "goal";
+    static AMBASSADOR_CAMPAIGN_ENDPOINT = "ambassador-campaign";
+    static SCREEN_TIME_LOG_ENDPOINT = "screen-time-log";
+    static LOGGED_ENDPOINT = "logged";
+    static UNLOGGED_ENDPOINT = "unlogged";
+    static LOG_ENDPOINT = "log";
+    static USER_TRAIL_ENDPOINT = "user-trail";
+    static HOME_BANNER_ENDPOINT = "home-banner";
+    static BANNER_VIEW = "banner-view";
+    static USER_COMMUNITY_ENDPOINT = "user-community";
+    static POST_ENDPOINT = "post";
+    static POST_COMMENT_ENDPOINT = "post-comment";
+    static POST_COMMENT_RESPONSE_ENDPOINT = "response";
+    static POST_LIKE_ENDPOINT = "post-like";
+    static POST_REPORT_ENDPOINT = "post-report";
+    static PRE_ENROLLMENT_ENDPOINT = "pre-enrollment";
+    static CHALLENGE_ENDPOINT = "challenge";
+    static STATEMENT_ENDPOINT = "statement";
+    static RAW_ENDPOINT = "raw";
+    static TETRIS_ENDPOINT = "tetris";
+    static AI_ENDPOINT = "ai";
+    static QUERY_ENDPOINT = "query";
+    static PEER_2_PEEER = "peer-2-peer";
+    static SFU_ENDPOINT = "selective-forwarding-unity";
+    static CHAT_ENDPOINT = "chat";
+    static QUESTION_ENDPOINT = "question";
+    static HAND_ENDPOINT = "hand";
+    static TRAIL_INVITE_ENDPOINT = "trail-invite";
+    static CACHE_ENDPOINT = "cache";
+    static STREAM_ENDPOINT = "stream";
+    static ROOM_ENDPOINT = "room";
+    static CERTIFICATE_ENDPOINT = "certificate";
+
+    static POLICIES_PREFIX = "@EDUCATION_PLATFORM/COURSE_MANAGEMENT";
+}

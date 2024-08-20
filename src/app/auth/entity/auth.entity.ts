@@ -1,8 +1,4 @@
 import { AuditCamelCase } from "../../commons/entity/audit.entity";
-import { EscolarityEnum } from "../../auth/enum/escolarity.enum";
-import { GenderEnum } from "../../auth/enum/gender.enum";
-import { UserProfileEnum } from "../../auth/enum/user-profile.enum";
-import { Role } from "../../auth/entity/role.entity";
 
 export interface User extends AuditCamelCase {
     id: string;
@@ -11,12 +7,9 @@ export interface User extends AuditCamelCase {
     salt?: string;
     daily_goal: number;
     email?: string;
-    profile: UserProfileEnum;
     photoPath?: string;
     nickname?: string;
     birthday?: Date;
-    gender?: GenderEnum;
-    schooling?: EscolarityEnum;
     institutionName?: string;
     profession?: string;
     address?: string;
@@ -42,5 +35,5 @@ export interface User extends AuditCamelCase {
     cpf?: string;
     deleted: boolean;
     deletedAt: Date;
-    role: Role;
+
 }
