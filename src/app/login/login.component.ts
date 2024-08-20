@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../auth/service/auth.service';
-import { AuthModule } from '../auth/auth.module';
+import { AuthControllerService } from '../auth/controller/auth-controller.service';
 
 @Component({
   selector: 'app-login',
@@ -11,32 +10,37 @@ import { AuthModule } from '../auth/auth.module';
     CommonModule,
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  constructor(
-    private readonly auth: AuthService,
-    private router: Router,
-  ){}
-
-
   someError: boolean = false;
   emailPassWordError: boolean = false;
   isLoading: boolean = false;
 
   private readonly redirectAfter: string = "/contacts";
 
-  async emailAndPasswordLogin(
-    email: string,
-    password: string,
-  ){
-    this.resetError();
-    this.isLoading = false;
+  constructor(
+    private readonly auth: AuthControllerService,
+    private router: Router
+  ) {}
 
-    await this.auth
+  async emailAndPasswordLogin() {
+    this.resetError();
+    this.isLoading = true;
+    
+    try {
+      console.log('entrou no try - emailAndPasswordLogin - loginComponent');
+      const response = await this.auth.login();
+      // this.router.navigate([this.redirectAfter]);
+    } catch (error) {
+      console.error('Error during login:', error);
+      this.emailPassWordError = true;
+    } finally {
+      this.isLoading = false;
+    }
   }
 
-  resetError(){
+  resetError() {
     this.someError = false;
     this.emailPassWordError = false;
   }

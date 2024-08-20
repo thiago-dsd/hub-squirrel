@@ -1,28 +1,35 @@
 import { Injectable } from '@angular/core';
 import axios, { AxiosInstance } from 'axios';
-import { environment } from '../../../enviroments/environment.development';
+import { environment } from '../../../enviroments/environment.local';
+import { Token } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
-  private http: AxiosInstance;
+export class AuthControllerService {
+  private readonly prefix: string = `${environment.apiUrl}`;
+  private http: AxiosInstance = axios.create(
+    {
+      baseURL: this.prefix,
+    }
+  );
+  
 
-  constructor() {
-    this.http = axios.create({
-      baseURL: environment.apiUrl,
-    });
-  }
-
-  async login(email: string, password: string) {
+  public async login() : Promise<Token> {
+    const email = 'thiago@newschool.app';
+    const password = 'broxa';
+  
     try {
-      const { data } = await this.http.post('/user/auth/token', { email, password });
-      console.log('Token:', data.token);
-      console.log('Refresh Token:', data.refresh_token);
-      return data;
+      const { data: token} = await this.http.post('/user/auth/token', { email, password });
+
+      console.log('Token:', token.token);
+      console.log('Refresh Token:', token.refresh_token);
+      
+      return token;
     } catch (error) {
       console.error('Error during login:', error);
       throw error;
     }
   }
+  
 }

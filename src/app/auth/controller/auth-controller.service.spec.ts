@@ -1,22 +1,16 @@
-import { Injectable } from '@angular/core';
-import { AuthService } from './auth.service';
+import { TestBed } from '@angular/core/testing';
+import { AuthControllerService } from './auth-controller.service';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class AuthControllerService {
-  constructor(private readonly authService: AuthService) {}
 
-  async authenticate() {
-    const email = 'thiago@newschool.app';
-    const password = 'broxa';
-    
-    try {
-      const response = await this.authService.login(email, password);
-      console.log('Authenticated successfully', response);
-      // Aqui você pode salvar os tokens ou fazer outras operações
-    } catch (error) {
-      console.error('Authentication failed', error);
-    }
-  }
-}
+describe('AuthControllerService', () => {
+  let service: AuthControllerService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(AuthControllerService);
+  });
+
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
+});
