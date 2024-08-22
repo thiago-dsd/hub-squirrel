@@ -1,0 +1,9 @@
+{
+    "/user": {
+      "target": "https://wppmanager.server.newschool.app",
+      "secure": false,
+      "changeOrigin": true,
+      "legLeve": "debug"
+    }
+  }
+  

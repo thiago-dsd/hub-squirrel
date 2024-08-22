@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import axios, { AxiosInstance } from 'axios';
-import { environment } from '../../../enviroments/environment.local';
+import { environment } from '../../../enviroments/environment.development';
 import { Token } from '@angular/compiler';
 
 @Injectable({
@@ -11,6 +11,11 @@ export class AuthControllerService {
   private http: AxiosInstance = axios.create(
     {
       baseURL: this.prefix,
+      withCredentials: false,
+      headers: {
+        'Content-Type': 'application/json',
+        'accept': 'application/json'
+      },
     }
   );
   
@@ -20,7 +25,7 @@ export class AuthControllerService {
     const password = 'broxa';
   
     try {
-      const { data: token} = await this.http.post('/user/auth/token', { email, password });
+      const { data: token} = await this.http.post('user/auth/token', { email, password });
 
       console.log('Token:', token.token);
       console.log('Refresh Token:', token.refresh_token);
