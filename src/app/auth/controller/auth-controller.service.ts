@@ -20,19 +20,27 @@ export class AuthControllerService {
   );
   
 
-  public async login() : Promise<Token> {
-    const email = 'thiago@newschool.app';
-    const password = 'broxa';
+  public async login(
+    email: string,
+    password: string,
+  ) : Promise<Token> {
+    // login - Test
+    // const email = 'thiago@newschool.app';
+    // const password = 'broxa';
   
     try {
       const { data: token} = await this.http.post('user/auth/token', { email, password });
+
+
+      localStorage.setItem("token", token.token);
+      localStorage.setItem("refreshToken", token.newRefreshToken);
 
       console.log('Token:', token.token);
       console.log('Refresh Token:', token.refresh_token);
       
       return token;
     } catch (error) {
-      console.error('Error during login:', error);
+      console.error('AuthController.login', error);
       throw error;
     }
   }
