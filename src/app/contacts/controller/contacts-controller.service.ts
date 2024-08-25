@@ -4,6 +4,7 @@ import { environment } from '../../../enviroments/environment.development';
 import { Token } from '@angular/compiler';
 import { MessagingProduct } from '../entity/messaging-product.entity';
 import { Conversation } from '../entity/conversation.entity';
+import { Message } from '../entity/messsage.entity';
 
 @Injectable({
   providedIn: 'root',
@@ -51,9 +52,6 @@ export class ContactControllerService {
 
 
     console.log('Lista completa de Messaging Products:', messagingProducts);
-
-    
-
       return messagingProducts;
     } catch (error) {
       console.error('ContactsController.getMessagingProducts', error);
@@ -61,4 +59,21 @@ export class ContactControllerService {
     }
   }
   
+  public async getConversationHistory(conversationId: string) : Promise<Message[]> {
+    try {
+      const {data: conversationHistory} = await this.http.get('message/conversation/messaging-product-contact', {
+        params: {
+          limit: 10,
+          offset: 0,
+          created_at: 'desc',
+          messagingProductContactId: conversationId
+        }
+      });
+      console.log('Histórico da conversa:', conversationHistory);
+      return conversationHistory;
+    } catch (error) {
+      console.error('ContactsController.getMessagingProducts', error);
+      throw error;
+    }
+  }
 }

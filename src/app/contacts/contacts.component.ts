@@ -5,6 +5,7 @@ import { MessagingProduct } from './entity/messaging-product.entity';
 import { CommonModule } from '@angular/common';
 import { Conversation } from './entity/conversation.entity';
 import { response } from 'express';
+import { Message } from './entity/messsage.entity';
 
 @Component({
   selector: 'app-contacts',
@@ -19,6 +20,8 @@ export class ContactsComponent {
   isLoading: boolean = false;
   messagingProducts: MessagingProduct[] = [];
   conversations: Conversation[] = [];
+  selectedConversation: Conversation | null = null;
+  conversationHistory: Message[] = [];
 
 
   constructor(
@@ -26,9 +29,15 @@ export class ContactsComponent {
     private router: Router
   ) {}
 
-  ngAfterViewInit() {
+  ngOnInit() {
       this.getConversations()
   }
+
+  selectConversation(messagingProduct: Conversation): void {
+    console.log("Uma conversation foi seleiconada.")
+    this.selectedConversation = messagingProduct;
+  }
+
 
   async allMessagingProducts() {
     this.resetError();
@@ -58,6 +67,19 @@ export class ContactsComponent {
     }
   }
   
+  async getConversationHistory(selectedConversation: Conversation){
+    this.resetError();
+    this.isLoading = true;
+
+    try{
+      const response = await this.auth.getConversationHistory(this.selectedConversation?.id || "");     
+      this.conversationHistory = response;
+    } catch (error){
+      console.error('ContactsComponent.getConversationHistory()', error);
+    } finally{
+      this.isLoading = false;
+    }
+  }
 
   resetError() {
     this.someError = false;

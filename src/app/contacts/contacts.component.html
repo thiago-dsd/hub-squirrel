@@ -20,14 +20,14 @@
         <div class="w-3"></div>
         <div class="w-[350px] p-3 bg-secondary rounded-lg flex flex-col justify-center md:justify-start">
             <input type="text" placeholder="Buscar" class="w-full p-2 rounded-md border border-gray-300" />
-            <div class="h-3"></div>
+            <!-- <div class="h-3"></div>
             <div class="flex space-x-3 justify-center">
                 <button class="bg-white text-black py-2 px-4 rounded-md text-xs" (click)="getConversations()">Lidas</button>
                 <button class="bg-white text-black py-2 px-4 rounded-md text-xs">Não lidas</button>
-            </div>
+            </div> -->
             <div class="h-3"></div>
             <div class="space-y-3">
-                <div class="w-full h-20 bg-white rounded-md p-3 flex items-center space-x-3" *ngFor="let conversation of conversations" >
+                <div class="w-full h-20 bg-white rounded-md p-3 flex items-center space-x-3" *ngFor="let conversation of conversations" (click)="getConversationHistory(conversation)" >
                     <!-- Imagem Circular do Cliente -->
                     <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
                         <!-- Ícone ou inicial do cliente (opcional) -->
