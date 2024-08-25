@@ -3,6 +3,8 @@ import { ContactControllerService } from './controller/contacts-controller.servi
 import { Router } from '@angular/router';
 import { MessagingProduct } from './entity/messaging-product.entity';
 import { CommonModule } from '@angular/common';
+import { Conversation } from './entity/conversation.entity';
+import { response } from 'express';
 
 @Component({
   selector: 'app-contacts',
@@ -16,6 +18,7 @@ export class ContactsComponent {
   emailAndPassWordError: boolean = false;
   isLoading: boolean = false;
   messagingProducts: MessagingProduct[] = [];
+  conversations: Conversation[] = [];
 
 
   constructor(
@@ -23,25 +26,38 @@ export class ContactsComponent {
     private router: Router
   ) {}
 
-  async allMessagingProducts(
-    
-  ) {
+  ngAfterViewInit() {
+      this.getConversations()
+  }
+
+  async allMessagingProducts() {
     this.resetError();
     this.isLoading = true;
 
-      // const response = await this.auth.getMessagingProducts()
-      // .then(() => {
-      //     this.isLoading = false;
-               
-      //   })
-      // .catch((error) => {
-      //   this.isLoading = false;
-      // })
-
-      this.messagingProducts = await this.auth.getMessagingProducts();     
-
-    this.isLoading = false;
+    try{
+      const response = await this.auth.getMessagingProducts();     
+      this.messagingProducts = response;
+    } catch (error){
+      console.error('ContactsComponent.allMessagingProducts()', error);
+    } finally{
+      this.isLoading = false;
+    }
   }
+
+  async getConversations() {
+    this.resetError();
+    this.isLoading = true;
+  
+    try {
+      const response = await this.auth.getConversations();
+      this.conversations = response; 
+    } catch (error) {
+      console.error('ContactsComponent.getConversations()', error);
+    } finally {
+      this.isLoading = false;
+    }
+  }
+  
 
   resetError() {
     this.someError = false;

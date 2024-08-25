@@ -22,12 +22,12 @@
             <input type="text" placeholder="Buscar" class="w-full p-2 rounded-md border border-gray-300" />
             <div class="h-3"></div>
             <div class="flex space-x-3 justify-center">
-                <button class="bg-white text-black py-2 px-4 rounded-md text-xs" (click)="allMessagingProducts()">Lidas</button>
+                <button class="bg-white text-black py-2 px-4 rounded-md text-xs" (click)="getConversations()">Lidas</button>
                 <button class="bg-white text-black py-2 px-4 rounded-md text-xs">Não lidas</button>
             </div>
             <div class="h-3"></div>
             <div class="space-y-3">
-                <div class="w-full h-20 bg-white rounded-md p-3 flex items-center space-x-3" *ngFor="let product of messagingProducts" >
+                <div class="w-full h-20 bg-white rounded-md p-3 flex items-center space-x-3" *ngFor="let conversation of conversations" >
                     <!-- Imagem Circular do Cliente -->
                     <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
                         <!-- Ícone ou inicial do cliente (opcional) -->
@@ -38,36 +38,14 @@
                     <div class="flex flex-col justify-center flex-grow">
                         <div class="flex justify-between">
                             <!-- Número do Cliente -->
-                            <p class="font-bold text-sm">{{product.name}}</p>
+                            <p class="font-bold text-sm">{{conversation.from.product_details.phone_number}}</p>
                             <!-- Horário da Última Resposta -->
-                            <p class="text-gray-600 text-sm">{{ product.updated_at }}</p>
+                            <p class="text-gray-600 text-sm">{{conversation.from.updated_at}}</p>
                         </div>
 
                         <!-- Última Mensagem do Cliente -->
-                        <p class="text-gray-600 text-sm">Última mensagem do aluno...</p>
+                        <p class="text-gray-600 text-sm">{{conversation.product_data?.text?.body}}</p>
                     </div>
-                </div>
-                <div class="w-full h-20 bg-white rounded-md p-3 flex items-center space-x-3">
-                    <!-- Imagem Circular do Cliente -->
-                    <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
-                        <!-- Ícone ou inicial do cliente (opcional) -->
-                        <span class="text-white font-bold text-lg">A</span>
-                    </div>
-                    
-                    <!-- Conjunto de Texto -->
-                    <div class="flex flex-col justify-center flex-grow">
-                        <div class="flex justify-between">
-                            <!-- Número do Cliente -->
-                            <p class="font-bold text-sm">+55 11 99999-9999</p>
-                            <!-- Horário da Última Resposta -->
-                            <p class="text-gray-600 text-sm">12:45 PM</p>
-                        </div>
-
-                        <!-- Última Mensagem do Cliente -->
-                        <p class="text-gray-600 text-sm">Última mensagem do aluno...</p>
-                    </div>
-                    
-                    
                 </div>
             </div>
         </div>
