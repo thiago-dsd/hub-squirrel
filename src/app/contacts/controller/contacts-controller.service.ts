@@ -59,17 +59,18 @@ export class ContactControllerService {
     }
   }
   
-  public async getConversationHistory(conversationId: string) : Promise<Message[]> {
+  public async getConversationHistory(from_id: string) : Promise<Message[]> {
     try {
-      const {data: conversationHistory} = await this.http.get('message/conversation/messaging-product-contact', {
+      // console.log('message/conversation/messaging-product-contact/' + from_id)
+      // console.log('My from_id: ', from_id);
+      const {data: conversationHistory} = await this.http.get('message/conversation/messaging-product-contact/' + from_id, {
         params: {
           limit: 10,
           offset: 0,
           created_at: 'desc',
-          messagingProductContactId: conversationId
-        }
+        },
       });
-      console.log('Histórico da conversa:', conversationHistory);
+      // console.log('Histórico da conversa:', conversationHistory);
       return conversationHistory;
     } catch (error) {
       console.error('ContactsController.getMessagingProducts', error);

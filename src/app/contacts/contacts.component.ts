@@ -71,8 +71,11 @@ export class ContactsComponent {
     this.resetError();
     this.isLoading = true;
 
+    console.error('Contacts.component - fromId = ', );
+
     try{
-      const response = await this.auth.getConversationHistory(this.selectedConversation?.id || "");     
+      const response = await this.auth.getConversationHistory(selectedConversation?.from_id || "");
+      console.log("conversationHistory in components.ts = ", response.length);     
       this.conversationHistory = response;
     } catch (error){
       console.error('ContactsComponent.getConversationHistory()', error);
