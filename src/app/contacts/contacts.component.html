@@ -29,22 +29,22 @@
             <div class="space-y-3">
                 <div class="w-full h-20 bg-white rounded-md p-3 flex items-center space-x-3" *ngFor="let conversation of conversations" (click)="getConversationHistory(conversation)" >
                     <!-- Imagem Circular do Cliente -->
-                    <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
+                    <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center shrink-0">
                         <!-- Ícone ou inicial do cliente (opcional) -->
                         <span class="text-white font-bold text-lg">A</span>
                     </div>
                     
                     <!-- Conjunto de Texto -->
-                    <div class="flex flex-col justify-center flex-grow">
-                        <div class="flex justify-between">
+                    <div class="flex flex-col justify-between flex-grow">
+                        <div class="flex justify-between items-center">
                             <!-- Número do Cliente -->
-                            <p class="font-bold text-sm">{{conversation.from.product_details.phone_number}}</p>
+                            <p class="font-bold text-sm mr-4">{{conversation.from.product_details.phone_number}}</p>
                             <!-- Horário da Última Resposta -->
-                            <p class="text-gray-600 text-sm">{{conversation.from.updated_at}}</p>
+                            <p class="text-gray-600 text-sm line-clamp-1">{{ formatDate(conversation.from.updated_at) }}</p>
                         </div>
 
                         <!-- Última Mensagem do Cliente -->
-                        <p class="text-gray-600 text-sm">{{conversation.product_data?.text?.body}}</p>
+                        <p class="text-gray-600 text-sm line-clamp-1" title="{{conversation.product_data?.text?.body}}">{{conversation.product_data?.text?.body}}</p>
                     </div>
                 </div>
             </div>
@@ -66,8 +66,14 @@
                 <div class="space-y-3">
                 <!-- Iterar sobre a conversationHistory -->
                 <div *ngFor="let message of conversationHistory">
+                    <!-- Debugging
+                    <p *ngIf="message.from_id">From ID: {{ message.from_id }}</p>
+                    <p *ngIf="message.to_id">To ID: {{ message.to_id }}</p>
+                    <p *ngIf="message.product_data?.text?.body">Message Body: {{ message.product_data?.text?.body }}</p> -->
+
+
                     <!-- Mensagem do Suporte -->
-                    <div *ngIf="message.from_id === null" class="flex justify-end">
+                    <div *ngIf="message.from_id === '00000000-0000-0000-0000-000000000000'" class="flex justify-end">
                     <div class="flex flex-col bg-primary text-white p-3 rounded-lg max-w-xs">
                         <p>{{ message.product_data?.text?.body }}</p>
                         <p class="text-xs text-right text-gray-500">{{ message.created_at | date: 'HH:mm' }}</p>
@@ -75,7 +81,7 @@
                     </div>
             
                     <!-- Mensagem do Cliente -->
-                    <div *ngIf="message.to_id === null" class="flex justify-start">
+                    <div *ngIf="message.to_id === '00000000-0000-0000-0000-000000000000'" class="flex justify-start">
                     <div class="flex flex-col bg-secondary text-black p-3 rounded-lg max-w-xs">
                         <p>{{ message.product_data?.text?.body }}</p>
                         <p class="text-xs text-right text-gray-500">{{ message.created_at | date: 'HH:mm' }}</p>

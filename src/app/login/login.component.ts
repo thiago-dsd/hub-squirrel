@@ -54,4 +54,5 @@ export class LoginComponent {
     this.someError = false;
     this.emailAndPassWordError = false;
   }
+
 }
