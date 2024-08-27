@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { ContactControllerService } from './controller/contacts-controller.service';
 import { Router } from '@angular/router';
 import { MessagingProduct } from './entity/messaging-product.entity';
@@ -7,6 +7,8 @@ import { Conversation } from './entity/conversation.entity';
 import { response } from 'express';
 import { Message } from './entity/messsage.entity';
 import { SendMessage } from './entity/send-message.entity';
+import { map, Subscription } from 'rxjs';
+import { WebsocketService } from './websocket/websocket-controller.service';
 
 @Component({
   selector: 'app-contacts',
@@ -25,13 +27,44 @@ export class ContactsComponent {
   conversationHistory: Message[] = [];
 
 
+
   constructor(
     private readonly auth: ContactControllerService,
+    private readonly webSocketService: WebsocketService,
     private router: Router
   ) {}
 
   ngOnInit() {
-      this.getConversations()
+    this.getConversations();
+
+    // Conectar ao WebSocket
+      const response = this.webSocketService.connectSocket()
+        
+      
+      
+      // .subscribe((status) => {
+      //     if (status) {
+      //       this.messageListener();
+      //     } else {
+      //       console.error('Erro na conexão WebSocket');
+      //     }
+      //   });
+  }
+
+  listenMessages() {
+    this.webSocketService.messageSubject.subscribe(
+      (message) => {
+        console.log('Nova mensagem recebida via WebSocket: ', message);
+        // Aqui você pode tratar a mensagem, como adicionar à lista de mensagens, etc.
+      },
+      (error) => {
+        console.error('Erro ao receber mensagem do WebSocket:', error);
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.webSocketService.disconnectSocket();
   }
 
   async allMessagingProducts() {
