@@ -19,7 +19,7 @@ export class ContactsComponent {
   emailAndPassWordError: boolean = false;
   isLoading: boolean = false;
   messagingProducts: MessagingProduct[] = [];
-  conversations: Conversation[] = [];
+  conversations = new Map<Conversation['id'], Conversation>();
   currentConversation: Conversation | null = null;
   conversationHistory: Message[] = [];
 

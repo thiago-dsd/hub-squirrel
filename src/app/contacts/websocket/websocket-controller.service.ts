@@ -18,15 +18,6 @@ export class WebsocketService {
     };
   }
 
-  connectSocket(): boolean {
-    try {
-      console.log('Websocket conectado com sucesso');
-    } catch {
-      return false;
-    }
-    return true;
-  }
-
   disconnectSocket() {
     this.messageSubject.complete();
   }
