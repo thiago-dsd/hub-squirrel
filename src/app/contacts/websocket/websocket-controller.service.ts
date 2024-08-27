@@ -8,7 +8,7 @@ import { Message } from '../entity/messsage.entity';
 export class WebsocketService {
   messageSubject = new Subject<Message>();
   ws: WebSocket = new WebSocket(
-    `ws://wppmanager.server.newschool.app/websocket/message/new?${'Bearer ' + (localStorage.getItem('token') || '')}`,
+    `ws://wppmanager.server.newschool.app/websocket/message/new?Authorization=${'Bearer ' + (localStorage.getItem('token') || '')}`,
   );
 
   constructor() {
