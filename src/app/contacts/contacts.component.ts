@@ -19,7 +19,7 @@ export class ContactsComponent {
   emailAndPassWordError: boolean = false;
   isLoading: boolean = false;
   messagingProducts: MessagingProduct[] = [];
-  conversations = new Map<Conversation['id'], Conversation>();
+  conversations: Conversation[] = [];
   currentConversation: Conversation | null = null;
   conversationHistory: Message[] = [];
 
@@ -30,11 +30,6 @@ export class ContactsComponent {
 
   ngOnInit() {
     this.getConversations();
-
-    // Conectar ao WebSocket
-    console.log('connecting to socket');
-    const response = this.webSocketService.connectSocket();
-    console.log('connected response = ', response);
   }
 
   ngOnDestroy() {
