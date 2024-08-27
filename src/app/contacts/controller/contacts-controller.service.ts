@@ -5,6 +5,7 @@ import { Token } from '@angular/compiler';
 import { MessagingProduct } from '../entity/messaging-product.entity';
 import { Conversation } from '../entity/conversation.entity';
 import { Message } from '../entity/messsage.entity';
+import { SendMessage } from '../entity/send-message.entity';
 
 @Injectable({
   providedIn: 'root',
@@ -65,15 +66,28 @@ export class ContactControllerService {
       // console.log('My from_id: ', from_id);
       const {data: conversationHistory} = await this.http.get('message/conversation/messaging-product-contact/' + from_id, {
         params: {
-          limit: 20,
+          limit: 100,
           offset: 0,
-          created_at: 'desc',
+          created_at: 'asc',
         },
       });
-      // console.log('Histórico da conversa:', conversationHistory);
+
+      
+      console.log('Histórico da conversa:', conversationHistory);
       return conversationHistory;
     } catch (error) {
       console.error('ContactsController.getMessagingProducts', error);
+      throw error;
+    }
+  }
+
+  public async sendMessage(message: SendMessage) {
+    try {
+      const response = await this.http.post('message/whatsapp', message);
+      console.log('sendMessage', response);
+      return response;
+    } catch (error) {
+      console.error('ContactsController.sendMessage', error);
       throw error;
     }
   }

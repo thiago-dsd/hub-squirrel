@@ -94,9 +94,11 @@
         
             <!-- Footer -->
             <div class="bg-secondary p-4 border-t border-gray-300 flex items-center rounded-b-lg">
-                <input type="text" placeholder="Digite sua mensagem..." class="flex-grow border rounded-lg p-2 mr-2">
-                <button class="bg-white text-black py-2 px-4 rounded-lg ">Enviar</button>
+                <input type="text" placeholder="Digite sua mensagem..." class="flex-grow border rounded-lg p-2 mr-2" #messageInput>
+                <button class="bg-white text-black py-2 px-4 rounded-lg" (click)="sendMessage(messageInput.value)">Enviar</button>
             </div>
+
+
         </div>
         
     </div>
