@@ -38,13 +38,17 @@
                     <div class="flex flex-col justify-between flex-grow">
                         <div class="flex justify-between items-center">
                             <!-- Número do Cliente -->
-                            <p class="font-bold text-sm mr-4">{{conversation.from.product_details.phone_number}}</p>
+                            <p class="font-bold text-sm mr-4">
+                                {{ (conversation.sender_data?.to || conversation.product_data?.from) || 'Número não disponível' }}
+                              </p>
                             <!-- Horário da Última Resposta -->
-                            <p class="text-gray-600 text-sm line-clamp-1">{{ formatDate(conversation.from.updated_at) }}</p>
+                            <p class="text-gray-600 text-sm line-clamp-1">{{ formatDate(conversation.updated_at) }}</p>
                         </div>
 
                         <!-- Última Mensagem do Cliente -->
-                        <p class="text-gray-600 text-sm line-clamp-1" title="{{conversation.product_data?.text?.body}}">{{conversation.product_data?.text?.body}}</p>
+                        <p class="text-gray-600 text-sm line-clamp-1" title="{{ (conversation.sender_data?.text?.body || conversation.product_data?.text?.body) || 'Mensagem não disponível' }}">
+                            {{ (conversation.sender_data?.text?.body || conversation.product_data?.text?.body) || 'Mensagem não disponível' }}
+                          </p>
                     </div>
                 </div>
             </div>

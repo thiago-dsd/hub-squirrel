@@ -54,6 +54,7 @@ export class ContactsComponent {
   
     try {
       const response = await this.auth.getConversations();
+      console.log('ContactsComponent.getConversations() retorou ', response);
       this.conversations = response; 
     } catch (error) {
       console.error('ContactsComponent.getConversations()', error);
@@ -68,7 +69,11 @@ export class ContactsComponent {
 
     try{
       this.currentConversation = selectedConversation;
-      const response = await this.auth.getConversationHistory(selectedConversation?.from_id || "");
+      const idToUse = selectedConversation.from_id === "00000000-0000-0000-0000-000000000000"
+        ? selectedConversation.to_id
+        : selectedConversation.from_id;
+
+      const response = await this.auth.getConversationHistory(idToUse);
       console.log("conversationHistory in components.ts = ", response.length);     
       this.conversationHistory = response;
     } catch (error){
