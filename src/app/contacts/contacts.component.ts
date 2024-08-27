@@ -35,18 +35,14 @@ export class ContactsComponent {
     console.log('connecting to socket');
     const response = this.webSocketService.connectSocket();
     console.log('connected response = ', response);
+    this.listenMessages();
   }
 
   listenMessages() {
-    this.webSocketService.messageSubject.subscribe(
-      (message) => {
-        console.log('Nova mensagem recebida via WebSocket: ', message);
-        // Aqui você pode tratar a mensagem, como adicionar à lista de mensagens, etc.
-      },
-      (error) => {
-        console.error('Erro ao receber mensagem do WebSocket:', error);
-      },
-    );
+    this.webSocketService.messageSubject.subscribe((message) => {
+      console.log('Nova mensagem recebida via WebSocket: ', message);
+      // Aqui você pode tratar a mensagem, como adicionar à lista de mensagens, etc.
+    });
   }
 
   ngOnDestroy() {
