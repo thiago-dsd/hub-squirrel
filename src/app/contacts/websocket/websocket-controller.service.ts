@@ -1,30 +1,38 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Message } from '../entity/messsage.entity';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WebsocketService {
-  messageSubject = new Subject<Message>();
-  ws: WebSocket = new WebSocket(
-    `ws://wppmanager.server.newschool.app/websocket/message/new?Authorization=${'Bearer ' + (localStorage.getItem('token') || '')}`,
-  );
+  private messageSubject = new Subject<Message>();
+  private ws: WebSocket;
 
   constructor() {
+    this.ws = new WebSocket(
+      `ws://wppmanager.server.newschool.app/websocket/message/new?Authorization=${'Bearer ' + (localStorage.getItem('token') || '')}`
+    );
+
     this.ws.onopen = async () => {
-      await Promise.all([this.watchMessages()]);
-      // Pegar as mensagens atuais da conversa antes
+      await this.watchMessages();
     };
   }
 
   disconnectSocket() {
     this.messageSubject.complete();
+    this.ws.close();
   }
 
-  async watchMessages(): Promise<void> {
-    this.ws.onmessage = (data: any) => {
-      console.log('WebsocketService.watchMessages()', data);
+  private async watchMessages(): Promise<void> {
+    this.ws.onmessage = (event: MessageEvent) => {
+      const message: Message = JSON.parse(event.data); // Assume que os dados recebidos são JSON
+      console.log('WebsocketService.watchMessages()', message);
+      this.messageSubject.next(message); // Envia a mensagem para os inscritos
     };
+  }
+
+  getMessageSubject(): Observable<Message> {
+    return this.messageSubject.asObservable();
   }
 }

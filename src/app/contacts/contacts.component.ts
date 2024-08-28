@@ -6,6 +6,7 @@ import { Conversation } from './entity/conversation.entity';
 import { Message } from './entity/messsage.entity';
 import { SendMessage } from './entity/send-message.entity';
 import { WebsocketService } from './websocket/websocket-controller.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-contacts',
@@ -22,6 +23,7 @@ export class ContactsComponent {
   conversations: Conversation[] = [];
   currentConversation: Conversation | null = null;
   conversationHistory: Message[] = [];
+  private wsSubscription: Subscription | undefined;
 
   constructor(
     private readonly auth: ContactControllerService,
@@ -30,6 +32,16 @@ export class ContactsComponent {
 
   ngOnInit() {
     this.getConversations();
+
+    this.wsSubscription = this.webSocketService.getMessageSubject().subscribe(
+      (message: Message) => {
+        console.log('Nova mensagem recebida via WebSocket: ', message);
+          this.conversationHistory.push(message);
+      },
+      (error) => {
+        console.error('Erro no WebSocket: ', error);
+      }
+    );    
   }
 
   ngOnDestroy() {
@@ -107,6 +119,8 @@ export class ContactsComponent {
       };
 
       const response = await this.auth.sendMessage(message);
+      const aux = this.currentConversation ? await this.getConversationHistory(this.currentConversation) : null;
+
     } catch (error) {
       console.error('ContactsComponent.sendMessage()', error);
     } finally {
