@@ -11,7 +11,7 @@ export class WebsocketService {
 
   constructor() {
     this.ws = new WebSocket(
-      `ws://wppmanager.server.newschool.app/websocket/message/new?Authorization=${'Bearer ' + (localStorage.getItem('token') || '')}`
+      `wss://wppmanager.server.newschool.app/websocket/message/new?Authorization=${'Bearer ' + (localStorage.getItem('token') || '')}`
     );
 
     this.ws.onopen = async () => {
