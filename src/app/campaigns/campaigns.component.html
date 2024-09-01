@@ -17,6 +17,7 @@
                 <span class="text-white font-bold text-sm">Status</span>
                 <span class="text-white font-bold text-sm text-centerx">Mesagens<br>Entregues</span>
                 <span class="text-white font-bold text-sm text-center">Última<br>Atualização</span>
+                <span class="text-white font-bold text-sm text-center">Opções</span>
             </div>
             <div class="space-y-3 m-3" *ngFor="let campaign of allCampaigns">
                 <div class="rounded-lg p-3 bg-secondary">
@@ -30,6 +31,16 @@
                         </div>
                         <span class="text-black font-semibold text-sm">321</span>
                         <span class="text-black font-semibold text-sm">03/02/2024</span>
+                        <div class="flex space-x-2">
+                            <button class=" bg-primary text-white p-2 rounded-full shadow-lg hover:bg-gray-600 transition">
+                                <img src="/assets/image/icon/edit.svg" alt="edit"  class="w-4 h-4" />
+                            </button>
+                            <button
+                                (click)="deleteCampaign(campaign.id)"
+                                class=" bg-primary text-white p-2 rounded-full shadow-lg hover:bg-gray-600 transition">
+                                <img src="/assets/image/icon/trash.svg" alt="trash" class="w-4 h-4"/>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <!-- <div class="rounded-lg p-3 bg-white">

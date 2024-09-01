@@ -38,16 +38,39 @@ export class CampaignControllerService {
     }
   }
 
-  
+  public async postCreateCampaign(messaging_product_id: string, name: string) {  
+    try {
+      const { data: campaigns} = await this.http.post('campaign', {
+        "messaging_product_id": messaging_product_id,
+        "name": name
+      });
+    } catch (error) {
+      console.error('CampaignController.postCreateCampaign', error);
+      throw error;
+    }
+  }
 
-//   public async sendMessage(message: SendMessage) {
-//     try {
-//       const response = await this.http.post('message/whatsapp', message);
-//       console.log('sendMessage', response);
-//       return response;
-//     } catch (error) {
-//       console.error('ContactsController.sendMessage', error);
-//       throw error;
-//     }
-//   }
+  public async deleteCampaign(campaign_id: string) {  
+    try {
+      const { data: campaigns} = await this.http.delete('campaign', {
+        data: {"id": campaign_id}
+      });
+    } catch (error) {
+      console.error('CampaignController.deleteCampaign', error);
+      throw error;
+    }
+  }
+
+  public async patchEditCampaign(id: string, messaging_product_id: string, name: string) {  
+    try {
+      const { data: campaigns} = await this.http.patch('campaign', {
+        "id": id,
+        "messaging_product_id": messaging_product_id,
+        "name": name
+      });
+    } catch (error) {
+      console.error('CampaignController.putCampaign', error);
+      throw error;
+    }
+  }
 }
