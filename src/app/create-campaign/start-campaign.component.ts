@@ -34,10 +34,25 @@ export class StartCampaignComponent {
     console.log(this.campaignId)
 
     this.campaignWebsocketService.connect(this.campaignId!);
+    this.wsSubscription = this.campaignWebsocketService.getCampaignSubject().subscribe(
+      (message) => {
+        console.log("Message received:", message);
+      },
+      (error) => {
+        console.error('WebSocket error:', error);
+      }
+    );
   }
 
   ngOnDestroy() {
     this.campaignWebsocketService.disconnectSocket();
+    if (this.wsSubscription) {
+      this.wsSubscription.unsubscribe();
+    }
+  }
+
+  test(){
+    this.campaignWebsocketService.sendStatusRequest();
   }
 
   selectModel(model: Model) {

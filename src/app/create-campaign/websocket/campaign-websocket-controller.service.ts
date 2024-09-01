@@ -14,22 +14,21 @@ export class CampaignWebsocketService {
   connect(campaignId: string) {
     this.ws = new WebSocket(`wss://wppmanager.server.newschool.app/websocket/campaign/whatsapp/send/${campaignId}?Authorization=${'Bearer ' + (localStorage.getItem('token') || '')}`);
     this.ws.onopen = async () => {
-      await this.sendStatusRequest();
+      await this.watchCampaign();
     };
-    this.ws.onerror = (error: Event) => {
-      console.error('WebSocket error:', error);
-    };
-    this.ws.onclose = () => {
-      console.log('WebSocket connection closed');
-    };
-    
   }
 
-  private async sendStatusRequest() : Promise<void> {
+  private async watchCampaign(): Promise<void> {
+    if(this.ws){this.ws.onmessage = (event: MessageEvent) => {
+      this.campaignSubject.next(event.data); 
+    };}
+  }
+
+  async sendStatusRequest() : Promise<void> {
     this.campaignSubject.next({ type: 'status' });
   }
 
-  private async sendCampaign() : Promise<void> {
+  async sendCampaign() : Promise<void> {
     this.campaignSubject.next({ type: 'send' });
   }
 
@@ -38,5 +37,9 @@ export class CampaignWebsocketService {
     if(this.ws){
       this.ws.close();
     }
+  }
+
+  getCampaignSubject(): Observable<any> {
+    return this.campaignSubject.asObservable();
   }
 }
