@@ -7,11 +7,12 @@ import { Message } from './entity/messsage.entity';
 import { SendMessage } from './entity/send-message.entity';
 import { WebsocketService } from './websocket/websocket-controller.service';
 import { Subscription } from 'rxjs';
+import { MenuComponent } from '../menu/menu.component';
 
 @Component({
   selector: 'app-contacts',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MenuComponent],
   templateUrl: './contacts.component.html',
   styleUrl: './contacts.component.css',
 })

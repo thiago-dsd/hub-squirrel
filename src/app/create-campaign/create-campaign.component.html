@@ -1,0 +1,58 @@
+<div class="h-screen w-screen overflow-hidden">
+    <div class="flex flex-row h-screen p-4 x-screen">
+        <app-menu></app-menu>
+        <div class="w-3"></div>
+        <div class="flex flex-col justify-between max-w-full flex-grow">
+            <div class="flex-grow max-w-full bg-white rounded-lg flex flex-col p-4">
+                <!-- Área para editar campanha aqui -->
+                <!-- Nome do modelo -->
+                <div class="space-y-3">
+                    <!-- Coluna com o título e o texto do modelo -->
+                    <div class="text-primary text-xl font-semibold">Nome do modelo</div>
+                    <div class="text-gray-950 text-sm">Insira o nome do seu modelo aqui</div>
+                    <!-- Campo de entrada -->
+                    <input type="text" placeholder="Digite o nome do modelo"
+                        class="w-full p-2 border border-gray-500 rounded-md bg-white">
+                </div>
+
+                <!-- Espaço de 12 pixels -->
+                <div class="h-5"></div>
+
+                <!-- Conteúdo -->
+                <div class="flex flex-col space-y-3">
+                    <div class="text-xl font-semibold text-gray-700">Conteúdo</div>
+                    <div class="space-y-3 flex flex-col bg-secondary rounded-lg p-4">
+                        <div class="text-lg text-gray-700">Corpo</div>
+                        <textarea placeholder="Digite o corpo da sua mensagem aqui..."
+                                class="w-full h-40 p-2 border border-gray-300 rounded-lg bg-white text-black resize-y overflow-y-auto"></textarea>
+                        
+                        <!-- Linha abaixo da text-area -->
+                        <div class="flex justify-between items-center mt-3">
+                            <!-- Contador de caracteres -->
+                            <span class="text-sm text-gray-700">Caracteres: 642/1024</span>
+                            
+                            <!-- Opções de estilização de texto -->
+                            <div class="space-x-2">
+                                <button class="text-gray-700">B</button>
+                                <button class="text-gray-700">I</button>
+                                <button class="text-gray-700">U</button>
+                                <button class="text-gray-700">S</button>
+                            </div>
+
+                            <!-- Adicionar uma variável -->
+                            <button class="text-gray-700">+ Adicionar uma variável</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Botões na parte inferior -->
+            <div class="flex justify-between p-4">
+                <button class="bg-white text-gray-700 py-2 px-4 rounded-md border border-gray-300 hover:bg-gray-300">Descartar</button>
+                <div class="flex space-x-2">
+                    <button class="bg-white text-gray-700 py-2 px-4 rounded-md border-gray-300 border hover:bg-gray-300">Voltar</button>
+                    <button class="bg-primary text-white py-2 px-4 rounded-md hover:bg-gray-300">Iniciar campanha</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

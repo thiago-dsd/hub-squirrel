@@ -2,8 +2,8 @@ import { Routes } from '@angular/router';
 import { ContactsComponent } from './contacts/contacts.component';
 import { CampaignsComponent } from './campaigns/campaigns.component';
 import { StatisticsComponent } from './statistics/statistics.component';
-import { ModelComponent } from './model/model.component';
 import { LoginComponent } from './login/login.component';
+import { CreateCampaignComponent } from './create-campaign/create-campaign.component';
 
 export const routes: Routes = [
     {
@@ -15,13 +15,13 @@ export const routes: Routes = [
         component: CampaignsComponent,
     },
     {
-        path: 'statistics',
-        component: StatisticsComponent,
+        path: 'create-campaign',
+        component: CreateCampaignComponent,
     },
     {
-        path: 'model',
-        component: ModelComponent,
-    },
+        path: 'statistics',
+        component: StatisticsComponent,
+    }, 
     {
         path: 'login',
         component: LoginComponent,
