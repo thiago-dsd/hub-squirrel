@@ -2,13 +2,40 @@
     <div class="flex flex-row h-screen p-4 x-screen">
         <app-menu></app-menu>
         <div class="w-3"></div>
+        <div class="w-[350px] p-3 bg-secondary rounded-lg flex flex-col justify-center md:justify-start">
+            <!-- Título da lista -->
+            <h2 class="text-lg font-semibold text-primary mb-4">Modelos disponíveis</h2>
+          
+            <!-- Lista de modelos -->
+            <div *ngFor="let model of allModels" 
+                [ngClass]="{
+                    'bg-primary': selectedModel && selectedModel.id === model.id,
+                    'bg-white': !(selectedModel && selectedModel.id === model.id)
+                }"
+                class="p-2 bg-white rounded-md mb-2 flex items-center justify-between"
+                (click)="selectModel(model)">
+              <div>
+                <p class="text-sm font-bold">ID: {{ model.id }}</p>
+                <p class="text-sm">Message: {{ model.sender_data.text.body }}</p>
+                <p class="text-sm">To: {{ model.sender_data.to }}</p>
+                <p class="text-sm">Type: {{ model.sender_data.type }}</p>
+                <!-- Adicione outras propriedades conforme necessário -->
+              </div>
+              <button 
+                (click)="deleteModel(model.id)" 
+                class="bg-primary p-1 rounded-full hover:bg-primary-100 transition">
+                <img src="/assets/image/icon/trash.svg" alt="Delete" class="w-4 h-4"/>
+              </button>
+            </div>
+          </div>                  
+        <div class="w-3"></div>
         <div class="flex flex-col justify-between max-w-full flex-grow">
             <div class="flex-grow max-w-full bg-white rounded-lg flex flex-col p-4">
                 <!-- Área para editar campanha aqui -->
                 <!-- Nome do modelo -->
                 <div class="space-y-3">
                     <!-- Coluna com o título e o texto do modelo -->
-                    <div class="text-primary text-xl font-semibold">Nome do modelo</div>
+                    <div class="text-primary text-xl font-semibold">Crie um novo modelo!</div>
                     <div class="text-gray-950 text-sm">Insira o nome do seu modelo aqui</div>
                     <!-- Campo de entrada -->
                     <input type="text" placeholder="Digite o nome do modelo"
@@ -23,7 +50,7 @@
                     <div class="text-xl font-semibold text-gray-700">Conteúdo</div>
                     <div class="space-y-3 flex flex-col bg-secondary rounded-lg p-4">
                         <div class="text-lg text-gray-700">Corpo</div>
-                        <textarea placeholder="Digite o corpo da sua mensagem aqui..."
+                        <textarea #messageText placeholder="Digite o corpo da sua mensagem aqui..."
                                 class="w-full h-40 p-2 border border-gray-300 rounded-lg bg-white text-black resize-y overflow-y-auto"></textarea>
                         
                         <!-- Linha abaixo da text-area -->
@@ -46,13 +73,16 @@
                 </div>
             </div>
             <!-- Botões na parte inferior -->
-            <div class="flex justify-between p-4">
-                <button class="bg-white text-gray-700 py-2 px-4 rounded-md border border-gray-300 hover:bg-gray-300">Descartar</button>
+            <div class="flex justify-center p-4">
+                <!-- <button class="bg-white text-gray-700 py-2 px-4 rounded-md border border-gray-300 hover:bg-gray-300">Descartar</button> -->
                 <div class="flex space-x-2">
-                    <button class="bg-white text-gray-700 py-2 px-4 rounded-md border-gray-300 border hover:bg-gray-300">Voltar</button>
-                    <button class="bg-primary text-white py-2 px-4 rounded-md hover:bg-gray-300">Iniciar campanha</button>
+                    <!-- <button class="bg-white text-gray-700 py-2 px-4 rounded-md border-gray-300 border hover:bg-gray-300">Voltar</button> -->
+                    <button (click)="createModel(messageText.value)" class="bg-primary text-white py-2 px-4 rounded-md hover:bg-gray-300">Salvar modelo</button>
                 </div>
             </div>
-        </div>
+            <!-- <div class="flex justify-center p-4">
+                <button (click)="createModel(messageText.value)" class="bg-primary text-white py-2 px-4 rounded-md hover:bg-gray-300">Iniciar Campanha</button>
+            </div> -->
+        </div> 
     </div>
 </div>
