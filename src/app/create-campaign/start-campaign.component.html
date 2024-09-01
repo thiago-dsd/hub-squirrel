@@ -12,20 +12,25 @@
                     'bg-primary': selectedModel && selectedModel.id === model.id,
                     'bg-white': !(selectedModel && selectedModel.id === model.id)
                 }"
-                class="p-2 bg-white rounded-md mb-2 flex items-center justify-between"
+                class="relative p-4 bg-white rounded-md mb-2 flex flex-col justify-between"
                 (click)="selectModel(model)">
-              <div>
-                <p class="text-sm font-bold">ID: {{ model.id }}</p>
-                <p class="text-sm">Message: {{ model.sender_data.text.body }}</p>
-                <p class="text-sm">To: {{ model.sender_data.to }}</p>
-                <p class="text-sm">Type: {{ model.sender_data.type }}</p>
-                <!-- Adicione outras propriedades conforme necessário -->
-              </div>
-              <button 
-                (click)="deleteModel(model.id)" 
-                class="bg-primary p-1 rounded-full hover:bg-primary-100 transition">
-                <img src="/assets/image/icon/trash.svg" alt="Delete" class="w-4 h-4"/>
-              </button>
+                
+                <!-- Conteúdo do modelo -->
+                <div>
+                    <p class="text-sm font-bold">ID: {{ model.id }}</p>
+                    <p class="text-sm">Message: {{ model.sender_data.text.body }}</p>
+                    <p class="text-sm">To: {{ model.sender_data.to }}</p>
+                    <p class="text-sm">Type: {{ model.sender_data.type }}</p>
+                    <!-- Adicione outras propriedades conforme necessário -->
+                </div>
+
+                <!-- Botão de exclusão -->
+                <button 
+                    (click)="deleteModel(model.id)" 
+                    class="absolute bottom-2 right-2 p-1 rounded-full hover:bg-primary-100 transition"
+                    (click)="$event.stopPropagation()">  <!-- Evitar que o clique no botão selecione o modelo -->
+                    <img src="/assets/image/icon/trash.svg" alt="Delete" class="w-4 h-4"/>
+                </button>
             </div>
           </div>                  
         <div class="w-3"></div>
@@ -81,7 +86,7 @@
                 </div>
             </div>
             <!-- <div class="flex justify-center p-4">
-                <button (click)="createModel(messageText.value)" class="bg-primary text-white py-2 px-4 rounded-md hover:bg-gray-300">Iniciar Campanha</button>
+                <button (click)="test()" class="bg-primary text-white py-2 px-4 rounded-md hover:bg-gray-300">Iniciar Campanha</button>
             </div> -->
         </div> 
     </div>

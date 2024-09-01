@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Model } from './entity/model.entity';
 import { StartCampaignControllerService } from './controller/start-campaign-controller.service';
 import { SendModel } from './entity/send-model';
+import { CampaignWebsocketService } from './websocket/campaign-websocket-controller.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-create-campaign',
@@ -18,13 +20,39 @@ export class StartCampaignComponent {
   campaignId: string | null = null;
   selectedModel: Model | null = null;
   allModels: Model[] = [];
+  private wsSubscription: Subscription | undefined;
 
-  constructor(private route: ActivatedRoute, private readonly startCampaignController: StartCampaignControllerService,) {}
+  constructor(
+    private route: ActivatedRoute, 
+    private readonly startCampaignController: StartCampaignControllerService, 
+    private readonly campaignWebsocketService: CampaignWebsocketService,
+  ) {}
 
   ngOnInit() {
     this.campaignId = this.route.snapshot.paramMap.get('id');
     this.getAllModelsByCampaignId(this.campaignId!);
     console.log(this.campaignId)
+
+    this.campaignWebsocketService.connect(this.campaignId!);
+    this.wsSubscription = this.campaignWebsocketService.getCampaignSubject().subscribe(
+      (message) => {
+        console.log("Message received:", message);
+      },
+      (error) => {
+        console.error('WebSocket error:', error);
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.campaignWebsocketService.disconnectSocket();
+    if (this.wsSubscription) {
+      this.wsSubscription.unsubscribe();
+    }
+  }
+
+  test(){
+    this.campaignWebsocketService.sendStatusRequest();
   }
 
   selectModel(model: Model) {
