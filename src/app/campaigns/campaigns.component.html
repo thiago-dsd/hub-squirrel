@@ -5,8 +5,7 @@
         <div class="flex-grow max-w-full h-14 bg-purple-950 rounded-lg flex flex-col">
             <!-- Header -->
             <div class="flex bg-secondary p-4 rounded-lg">
-                <input type="text" placeholder="Buscar modelo ..." class="flex-grow border rounded-lg p-2 mr-2 w-5  ">
-                
+                <input type="text" placeholder="Buscar modelo ..." class="flex-grow border rounded-lg p-2 mr-2 w-5">
             </div>
 
             <div class="h-3"></div>
@@ -20,23 +19,9 @@
                 <span class="text-white font-bold text-sm text-center">Última<br>Atualização</span>
             </div>
             <div class="space-y-3 m-3">
-                <div class=" rounded-lg p-3 bg-secondary">
+                <div class="rounded-lg p-3 bg-secondary">
                     <div class="flex justify-between items-center">
-                        <span class="text-black font-semibold text-sm">Modelo A</span>
-                        <div class="bg-red-700 pl-10 pr-10 pt-1 pb-1 rounded-lg">
-                            <span class="text-white font-semibold text-sm">Tag</span>
-                        </div>
-                        <div class="bg-green-700 pl-10 pr-10 pt-1 pb-1 rounded-lg">
-                            <span class="text-white font-semibold text-sm">Aberto</span>
-                        </div>
-                        <span class="text-black font-semibold text-sm">321</span>
-                        <span class="text-black font-semibold text-sm">03/02/2024</span>
-                    </div>
-                    
-                </div>
-                <div class=" rounded-lg p-3 bg-white">
-                    <div class="flex justify-between items-center">
-                        <span class="text-black font-semibold text-sm">Modelo A</span>
+                        <span class="text-black font-semibold text-sm">Campanha A</span>
                         <div class="bg-red-700 pl-10 pr-10 pt-1 pb-1 rounded-lg">
                             <span class="text-white font-semibold text-sm">Tag</span>
                         </div>
@@ -47,23 +32,9 @@
                         <span class="text-black font-semibold text-sm">03/02/2024</span>
                     </div>
                 </div>
-                <div class=" rounded-lg  p-3 bg-secondary">
+                <div class="rounded-lg p-3 bg-white">
                     <div class="flex justify-between items-center">
-                        <span class="text-black font-semibold text-sm">Modelo A</span>
-                        <div class="bg-red-700 pl-10 pr-10 pt-1 pb-1 rounded-lg">
-                            <span class="text-white font-semibold text-sm">Tag</span>
-                        </div>
-                        <div class="bg-green-700 pl-10 pr-10 pt-1 pb-1 rounded-lg">
-                            <span class="text-white font-semibold text-sm">Aberto</span>
-                        </div>
-                        <span class="text-black font-semibold text-sm">321</span>
-                        <span class="text-black font-semibold text-sm">03/02/2024</span>
-                    </div>
-                    
-                </div>
-                <div class=" rounded-lg  p-3 bg-white">
-                    <div class="flex justify-between items-center">
-                        <span class="text-black font-semibold text-sm">Modelo A</span>
+                        <span class="text-black font-semibold text-sm">Campanha A</span>
                         <div class="bg-red-700 pl-10 pr-10 pt-1 pb-1 rounded-lg">
                             <span class="text-white font-semibold text-sm">Tag</span>
                         </div>
@@ -76,6 +47,12 @@
                 </div>
             </div>
         </div>
-        
+        <!-- Floating Action Button -->
+        <button
+          (click)="navigateToCreateCampaign()"
+          class="fixed bottom-5 right-5 bg-primary text-white p-4 rounded-full shadow-lg hover:bg-gray-600 transition"
+        >
+          <img src="/assets/image/icon/add.svg" alt="Add"/>
+        </button>
     </div>
 </div>
