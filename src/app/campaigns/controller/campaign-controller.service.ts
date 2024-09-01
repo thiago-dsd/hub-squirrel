@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import axios, { AxiosInstance } from 'axios';
 import { environment } from '../../../enviroments/environment.development';
 import { Campaign } from '../entity/campaign.entity';
+import { MessagingProduct } from '../entity/messaging-product.entity';
 
 @Injectable({
   providedIn: 'root',
@@ -73,4 +74,19 @@ export class CampaignControllerService {
       throw error;
     }
   }
+
+  public async  getMessagingProducts(
+  ) : Promise<MessagingProduct[]> {  
+  try {
+    const { data: messagingProducts} = await this.http.get('messaging-product', {
+      params: {
+        limit: 10,
+      }
+    });
+    return messagingProducts;
+  } catch (error) {
+    console.error('ContactsController.getMessagingProducts', error);
+    throw error;
+  }
+}
 }

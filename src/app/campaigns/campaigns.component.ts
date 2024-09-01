@@ -4,17 +4,21 @@ import { MenuComponent } from '../menu/menu.component';
 import { Router } from '@angular/router';
 import { CampaignControllerService } from './controller/campaign-controller.service';
 import { Campaign } from './entity/campaign.entity';
+import { MessagingProduct } from './entity/messaging-product.entity';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-campaigns',
   standalone: true,
-  imports: [CommonModule, MenuComponent],
+  imports: [CommonModule, MenuComponent, FormsModule],
   templateUrl: './campaigns.component.html',
   styleUrl: './campaigns.component.css'
 })
 export class CampaignsComponent {
   isLoading: boolean = false;
+  isCreatingCampaign: boolean = false;
   allCampaigns: Campaign[] = [];
+  allMessagingProducts: MessagingProduct[] = [];
   selectedCampaign: Campaign | null = null;
 
   constructor(
@@ -28,6 +32,28 @@ export class CampaignsComponent {
 
   ngOnInit() {
     this.getAllCampaigns();
+  }
+
+  openCreateCampaignModal(state: boolean){
+    this.getAllMessagingProducts();
+    this.isCreatingCampaign = state
+  }
+
+  closeCreateCampaignModal(state: boolean){
+    this.isCreatingCampaign = state
+  }
+
+  campaignName: string = '';
+  selectedMessagingProductId: string = '';
+
+  onSubmitCampaignForm() {
+    if (this.campaignName && this.selectedMessagingProductId) {
+      this.createCampaign(this.selectedMessagingProductId, this.campaignName);
+      this.closeCreateCampaignModal(true);
+    } else {
+      // Caso queira, você pode adicionar uma lógica de feedback para o usuário aqui.
+      console.error('Nome da campanha ou plataforma não selecionados.');
+    }
   }
 
   async getAllCampaigns() {
@@ -80,6 +106,19 @@ export class CampaignsComponent {
     } finally {
       this.isLoading = false;
       this.getAllCampaigns();
+    }
+  }
+
+  async getAllMessagingProducts() {
+    this.isLoading = true;
+
+    try {
+      const response = await this.campaignController.getMessagingProducts();
+      this.allMessagingProducts = response;
+    } catch (error) {
+      console.error('CampaignComponent.allMessagingProducts()', error);
+    } finally {
+      this.isLoading = false;
     }
   }
 }

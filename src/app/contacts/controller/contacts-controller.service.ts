@@ -50,9 +50,6 @@ export class ContactControllerService {
           limit: 10,
         }
       });
-
-
-    console.log('Lista completa de Messaging Products:', messagingProducts);
       return messagingProducts;
     } catch (error) {
       console.error('ContactsController.getMessagingProducts', error);

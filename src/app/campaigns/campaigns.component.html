@@ -32,7 +32,8 @@
                         <span class="text-black font-semibold text-sm">321</span>
                         <span class="text-black font-semibold text-sm">03/02/2024</span>
                         <div class="flex space-x-2">
-                            <button class=" bg-primary text-white p-2 rounded-full shadow-lg hover:bg-gray-600 transition">
+                            <button 
+                                class=" bg-primary text-white p-2 rounded-full shadow-lg hover:bg-gray-600 transition">
                                 <img src="/assets/image/icon/edit.svg" alt="edit"  class="w-4 h-4" />
                             </button>
                             <button
@@ -60,10 +61,32 @@
         </div>
         <!-- Floating Action Button -->
         <button
-          (click)="navigateToCreateCampaign()"
+          (click)="openCreateCampaignModal(true)"
           class="fixed bottom-5 right-5 bg-primary text-white p-4 rounded-full shadow-lg hover:bg-gray-600 transition"
         >
           <img src="/assets/image/icon/add.svg" alt="Add"/>
         </button>
     </div>
+
+    <div *ngIf="isCreatingCampaign === true" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-lg p-6">
+          <h2 class="text-2xl font-bold mb-4 text-primary">Criar Campanha</h2>
+          <form class="space-y-4">
+            <div class="space-y-1">
+              <label for="campaignName" class="block text-sm font-medium text-gray-700">Nome da campanha</label>
+              <input #campaignNameInput id="campaignName" type="text" placeholder="Digite o nome do modelo" class="w-full p-2 border border-gray-300 rounded-md" required />
+            </div>
+            <div class="space-y-1">
+              <label for="campaignContent" class="block text-sm font-medium text-gray-700">Plataforma</label>
+              <select #messagingProductSelect id="messagingProduct" class="w-full p-2 border border-gray-300 rounded-md">
+                <option *ngFor="let product of allMessagingProducts" [value]="product.id">{{ product.name }}</option>
+              </select>
+            </div>
+            <div class="flex justify-between mt-4">
+              <button type="button" (click)="closeCreateCampaignModal(false)" class="bg-gray-300 text-gray-700 py-2 px-4 rounded-md">Cancelar</button>
+              <button type="submit" (click)="createCampaign(messagingProductSelect.value, campaignNameInput.value)" class="bg-primary hover:bg-primary-100 text-white py-2 px-4 rounded-md">Criar Campanha</button>
+            </div>
+          </form>
+        </div>
+      </div>
 </div>
