@@ -26,8 +26,8 @@ export class CampaignsComponent {
     private readonly campaignController: CampaignControllerService,
   ) {}
 
-  navigateToCreateCampaign() {
-    this.router.navigate(['/create-campaign']);
+  navigateToStartCampaign(campaignId: string) {
+    this.router.navigate(['/start-campaign', campaignId]);
   }
 
   ngOnInit() {

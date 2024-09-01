@@ -3,7 +3,7 @@ import { ContactsComponent } from './contacts/contacts.component';
 import { CampaignsComponent } from './campaigns/campaigns.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { LoginComponent } from './login/login.component';
-import { CreateCampaignComponent } from './create-campaign/create-campaign.component';
+import { StartCampaignComponent } from './create-campaign/start-campaign.component';
 
 export const routes: Routes = [
     {
@@ -15,8 +15,8 @@ export const routes: Routes = [
         component: CampaignsComponent,
     },
     {
-        path: 'create-campaign',
-        component: CreateCampaignComponent,
+        path: 'start-campaign/:id',
+        component: StartCampaignComponent,
     },
     {
         path: 'statistics',

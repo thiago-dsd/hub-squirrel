@@ -20,7 +20,7 @@
                 <span class="text-white font-bold text-sm text-center">Opções</span>
             </div>
             <div class="space-y-3 m-3" *ngFor="let campaign of allCampaigns">
-                <div class="rounded-lg p-3 bg-secondary">
+                <div class="rounded-lg p-3 bg-secondary cursor-pointer hover:bg-secondary-100" (click)="navigateToStartCampaign(campaign.id)">
                     <div class="flex justify-between items-center">
                         <span class="text-black font-semibold text-sm">{{campaign.name}}</span>
                         <div class="bg-red-700 pl-10 pr-10 pt-1 pb-1 rounded-lg">
