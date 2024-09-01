@@ -1,0 +1,29 @@
+<div class="h-full w-20 bg-secondary rounded-lg flex flex-col justify-center items-center md:justify-start space-y-3">
+    <div 
+      class="w-12 h-12 p-3 mt-3 rounded-lg flex justify-center items-center cursor-pointer"
+    >
+      <img src="/assets/image/icon/menu.svg" />
+    </div>
+    <div 
+      (click)="navigateTo('contacts')" 
+      [ngClass]="{'bg-primary': selectedPage === 'contacts', 'bg-white': selectedPage !== 'contacts'}"
+      class="w-12 h-12 p-3 rounded-lg flex justify-center items-center cursor-pointer"
+    >
+      <img src="/assets/image/icon/contacts.svg" />
+    </div>
+    <div 
+      (click)="navigateTo('campaigns')" 
+      [ngClass]="{'bg-primary': selectedPage === 'campaigns', 'bg-white': selectedPage !== 'campaigns'}"
+      class="w-12 h-12 p-3 rounded-lg flex justify-center items-center cursor-pointer"
+    >
+      <img src="/assets/image/icon/campaign.svg" />
+    </div>
+    <div 
+      (click)="navigateTo('statistics')" 
+      [ngClass]="{'bg-primary': selectedPage === 'statistics', 'bg-white': selectedPage !== 'statistics'}"
+      class="w-12 h-12 p-3 rounded-lg flex justify-center items-center cursor-pointer"
+    >
+      <img src="/assets/image/icon/statistics.svg" />
+    </div>
+  </div>
+  
