@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { WebSocketSubject } from 'rxjs/webSocket';
 
 @Injectable({
   providedIn: 'root',
@@ -13,28 +12,39 @@ export class CampaignWebsocketService {
 
   connect(campaignId: string) {
     this.ws = new WebSocket(`wss://wppmanager.server.newschool.app/websocket/campaign/whatsapp/send/${campaignId}?Authorization=${'Bearer ' + (localStorage.getItem('token') || '')}`);
+    
     this.ws.onopen = async () => {
       await this.watchCampaign();
     };
   }
 
   private async watchCampaign(): Promise<void> {
-    if(this.ws){this.ws.onmessage = (event: MessageEvent) => {
-      this.campaignSubject.next(event.data); 
-    };}
+    if (this.ws) {
+      this.ws.onmessage = (event: MessageEvent) => {
+        this.campaignSubject.next(event.data); 
+      };
+    }
   }
 
-  async sendStatusRequest() : Promise<void> {
-    this.campaignSubject.next({ type: 'status' });
+  async sendStatusRequest(): Promise<void> {
+    if (this.ws) {
+      this.ws.send('status');
+    } else {
+      console.error('WebSocket is not connected');
+    }
   }
 
-  async sendCampaign() : Promise<void> {
-    this.campaignSubject.next({ type: 'send' });
+  async sendCampaign(): Promise<void> {
+    if (this.ws) {
+      this.ws.send('send');
+    } else {
+      console.error('WebSocket is not connected');
+    }
   }
 
   disconnectSocket() {
     this.campaignSubject.complete();
-    if(this.ws){
+    if (this.ws) {
       this.ws.close();
     }
   }
