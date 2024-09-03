@@ -103,8 +103,6 @@ export class ContactsComponent {
     this.resetError();
     this.isLoading = true;
 
-    console.log('messageInput = ', messageInput);
-
     try {
       const message: SendMessage = {
         sender_data: {

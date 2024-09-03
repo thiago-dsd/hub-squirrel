@@ -22,12 +22,16 @@
           *ngFor="let conversation of conversations"
           (click)="getConversationHistory(conversation)"
         >
-          <!-- Imagem Circular do Cliente -->
           <div
             class="w-12 h-12 bg-primary rounded-full flex items-center justify-center shrink-0"
           >
-            <!-- Ícone ou inicial do cliente (opcional) -->
-            <span class="text-white font-bold text-lg">A</span>
+            <span class="text-white font-bold text-lg">
+              {{
+                conversation.from?.contact?.name 
+                  ? conversation.from.contact.name.charAt(0).toUpperCase() 
+                  : 'X'
+              }}
+            </span>
           </div>
 
           <!-- Conjunto de Texto -->
@@ -36,9 +40,9 @@
               <!-- Número do Cliente -->
               <p class="font-bold text-sm mr-4 truncate">
                 {{
-                  conversation.sender_data?.to ||
-                    conversation.product_data?.from ||
-                    "Número não disponível"
+                  conversation.from?.contact?.name ||
+                  conversation.from?.product_details?.phone_number || 
+                  "Número indisponível"
                 }}
               </p>
               <!-- Horário da Última Resposta -->
@@ -67,28 +71,36 @@
       </div>
     </div>
     <div class="w-3"></div>
-    <div class="flex-grow max-w-full bg-white rounded-lg flex flex-col">
+    <div *ngIf="!currentConversation" class="flex-grow flex flex-col items-center justify-center p-6 bg-secondary text-gray-700 rounded-md shadow-lg">
+      <h2 class="text-3xl font-bold mb-4">Bem-vindo ao EsquiloHub!</h2>
+      <p class="text-center text-lg mb-4">Nosso sistema é projetado para transformar a gestão de campanhas com tecnologia de ponta e uma interface amigável.</p>
+      <p class="text-center text-lg font-semibold">Selecione uma conversa para visualizar as mensagens e gerenciar suas interações.</p>
+    </div>
+
+    <div *ngIf="currentConversation" class="flex-grow max-w-full bg-white rounded-lg flex flex-col">
       <!-- Header -->
-      <div class="flex bg-secondary p-4 rounded-t-lg">
+      <div class="flex bg-secondary p-4 rounded-t-lg items-center">
         <div
           class="w-12 h-12 bg-primary rounded-full flex items-center justify-center"
         >
           <!-- Ícone ou inicial do cliente (opcional) -->
-          <span class="text-white font-bold text-lg">A</span>
+          <span class="text-white font-bold text-lg">
+            {{
+              currentConversation.from?.contact?.name 
+                ? currentConversation.from.contact.name.charAt(0).toUpperCase() 
+                : 'X'
+            }}
+          </span>
+        </div>
+        <div *ngIf="currentConversation.from?.contact?.name" class="text-gray-800 font-semibold ml-2">
+          {{ currentConversation.from.contact.name }}
         </div>
       </div>
-      <!-- Imagem Circular do Cliente -->
 
       <!-- Área de Mensagens -->
       <div class="flex-1 p-4 overflow-y-auto">
         <div class="space-y-3">
-          <!-- Iterar sobre a conversationHistory -->
           <div *ngFor="let message of conversationHistory">
-            <!-- Debugging
-                    <p *ngIf="message.from_id">From ID: {{ message.from_id }}</p>
-                    <p *ngIf="message.to_id">To ID: {{ message.to_id }}</p>
-                    <p *ngIf="message.product_data?.text?.body">Message Body: {{ message.product_data?.text?.body }}</p> -->
-
             <!-- Mensagem do Suporte -->
             <div
               *ngIf="message.from_id === '00000000-0000-0000-0000-000000000000'"
@@ -103,7 +115,6 @@
                 </p>
               </div>
             </div>
-
             <!-- Mensagem do Cliente -->
             <div
               *ngIf="message.to_id === '00000000-0000-0000-0000-000000000000'"
