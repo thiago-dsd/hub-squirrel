@@ -16,12 +16,13 @@ import { Subscription } from 'rxjs';
   styleUrl: './start-campaign.component.css'
 })
 export class StartCampaignComponent {
-  isLoading: boolean = false;
-  campaignId: string | null = null;
-  selectedModel: Model | null = null;
-  allModels: Model[] = [];
   private wsSubscription: Subscription | undefined;
-
+  campaignId: string | null = null;
+  messagesToSend: any[] = [];
+  selectedFileName: string | null = null;
+  updates: string[] = [];
+  isLoading: boolean = false;
+  
   constructor(
     private route: ActivatedRoute, 
     private readonly startCampaignController: StartCampaignControllerService, 
@@ -30,13 +31,10 @@ export class StartCampaignComponent {
 
   ngOnInit() {
     this.campaignId = this.route.snapshot.paramMap.get('id');
-    this.getAllModelsByCampaignId(this.campaignId!);
-    console.log(this.campaignId)
-
     this.campaignWebsocketService.connect(this.campaignId!);
     this.wsSubscription = this.campaignWebsocketService.getCampaignSubject().subscribe(
       (message) => {
-        console.log("Message received:", message);
+        this.updates.push(message);
       },
       (error) => {
         console.error('WebSocket error:', error);
@@ -51,66 +49,50 @@ export class StartCampaignComponent {
     }
   }
 
-  test(){
-    this.campaignWebsocketService.sendStatusRequest();
-  }
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    
+    if (file) {
+      this.selectedFileName = file.name;
 
-  selectModel(model: Model) {
-    this.selectedModel = model;
-  }
-
-  async getAllModelsByCampaignId(campaignId: string) {
-    this.isLoading = true;
-
-    try {
-      const response = await this.startCampaignController.getAllModelsByCampaignId(campaignId);
-      this.allModels = response;
-    } catch (error) {
-      console.error('StartCampaignComponent.getAllModelsByCampaignId()', error);
-    } finally {
-      this.isLoading = false;
-    }
-  }
-
-  async createModel(messageText: string) {
-    this.isLoading = true;
-
-    try {
-      const sendModel: SendModel = {
-        campaign_id: this.campaignId!,
-        sender_data: {
-          messaging_product: "e5653550-450b-4dc9-8c35-33132e415fa3",
-          text: {
-            body: messageText,
-            preview_url: true
-          },
-          to: "string",
-          type: "text"
+      const reader = new FileReader();
+      
+      reader.onload = (e: any) => {
+        try {
+          const jsonContent: any[] = JSON.parse(e.target.result);
+          this.messagesToSend = jsonContent;
+        } catch (err) {
+          console.error('StartCampaignComponent.onFileSelected()', err);
         }
       };
 
-      // Enviando o objeto para o controlador
-      const response = await this.startCampaignController.postCreateModel(sendModel);
-      
-    } catch (error) {
-      console.error('StartCampaignComponent.createModel()', error);
-    } finally {
-      this.getAllModelsByCampaignId(this.campaignId!);
+      reader.readAsText(file);
+    } else {
+      this.selectedFileName = null;
+    }
+  }
+
+  async createCampaignMessage(){
+    try{
+      this.messagesToSend.map( async (value) => {
+        const campaign: any = {
+          campaign_id: this.campaignId!,
+          "sender_data": value
+        };
+        const response = await this.startCampaignController.postCreateModel(campaign);
+      })
+    } catch (error){
+      console.error('StartCampaignComponent.createCampaignMessage()', error);
+    } finally{
       this.isLoading = false;
     }
   }
 
+  sendCampaign(){
+    this.campaignWebsocketService.sendCampaign();
+  }
 
-  async deleteModel(modelId: string) {
-    this.isLoading = true;
-
-    try {
-      const response = await this.startCampaignController.deleteModel(modelId);
-      this.getAllModelsByCampaignId(this.campaignId!);
-    } catch (error) {
-      console.error('StartCampaignComponent.deleteModel()', error);
-    } finally {
-      this.isLoading = false;
-    }
+  verifyStatus(){
+    this.campaignWebsocketService.sendStatusRequest();
   }
 }

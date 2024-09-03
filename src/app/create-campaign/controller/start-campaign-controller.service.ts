@@ -40,7 +40,7 @@ export class StartCampaignControllerService {
       }
     }
 
-    public async postCreateModel(send_model: SendModel) {  
+    public async postCreateModel(send_model: any) {  
       try {
         const { data: Model} = await this.http.post('campaign/message', send_model);
       } catch (error) {

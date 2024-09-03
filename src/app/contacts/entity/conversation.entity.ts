@@ -1,3 +1,5 @@
+import { from } from "rxjs";
+
 // Interface para a estrutura do texto dentro de sender_data
 export interface TextData {
   preview_url: boolean;
@@ -28,7 +30,7 @@ export interface Contact {
 }
 
 // Interface para a estrutura to
-export interface To {
+export interface From {
   product_details: ProductDetails; // Detalhes do produto
   contact_id: string;              // e.g., '9e865d02-d449-4121-8bc5-299d89c19230'
   messaging_product_id: string;    // e.g., 'e5653550-450b-4dc9-8c35-33132e415fa3'
@@ -45,7 +47,7 @@ export interface Conversation {
   from_id: string;          // e.g., '00000000-0000-0000-0000-000000000000'
   to_id: string;            // e.g., '0174c9ec-c97a-4031-b6b6-766b5c887b4a'
   messaging_product_id: string;  // e.g., 'e5653550-450b-4dc9-8c35-33132e415fa3'
-  to: To;                  // Dados do destinatário
+  from: From;                  // Dados do destinatário
   id: string;              // e.g., '9b042996-2e49-4c8d-97e3-8413b1a3c9f7'
   created_at: string;     // Data de criação
   updated_at: string;     // Data de atualização
