@@ -20,11 +20,15 @@ export class ContactsComponent {
   someError: boolean = false;
   emailAndPassWordError: boolean = false;
   isLoading: boolean = false;
+  pageSize = 10;
+  offset = 0; // Começamos do offset 0
+  hasMoreConversations = true; // Controle se ainda há mais conversas para carregar
   messagingProducts: MessagingProduct[] = [];
   conversations: Conversation[] = [];
   currentConversation: Conversation | null = null;
   conversationHistory: Message[] = [];
   @ViewChild('chatContainer') private chatContainer!: ElementRef;
+  @ViewChild('conversationsContainer') private conversationsContainer!: ElementRef;
   private wsSubscription: Subscription | undefined;
 
   constructor(
@@ -65,18 +69,42 @@ export class ContactsComponent {
     }
   }
 
-  async getConversations() {
+  async getConversations(offset = 0) {
     this.resetError();
     this.isLoading = true;
 
     try {
-      const response = await this.auth.getConversations();
-      console.log('ContactsComponent.getConversations() retorou ', response);
-      this.conversations = response;
+      const response = await this.auth.getConversations(offset, this.pageSize);
+      
+      if(offset === 0){
+        this.conversations = response;
+      } else {
+        this.conversations = [...this.conversations, ...response];
+      }
+
+      if(response.length < this.pageSize){
+        this.hasMoreConversations = false;
+      }
     } catch (error) {
       console.error('ContactsComponent.getConversations()', error);
     } finally {
       this.isLoading = false;
+    }
+  }
+
+  ngAfterViewInit() {
+    this.conversationsContainer.nativeElement.addEventListener('scroll', () => {
+      const { scrollTop, scrollHeight, clientHeight } = this.conversationsContainer.nativeElement;
+      if (scrollTop + clientHeight >= scrollHeight) {
+        this.onScrollDown();
+      }
+    });
+  }
+
+  onScrollDown() {
+    if (this.hasMoreConversations) {
+      this.offset += this.pageSize; // Atualiza o offset
+      this.getConversations(this.offset); // Carrega a próxima página
     }
   }
 

@@ -24,13 +24,12 @@ export class ContactControllerService {
     }
   );
   
-  public async  getConversations(
-  ) : Promise<Conversation[]> {  
+  public async  getConversations(offset = 0, limit = 10) : Promise<Conversation[]> {  
     try {
       const { data: conversations} = await this.http.get('message/conversation', {
         params: {
-          limit: 10,
-          offset: 0,
+          limit: limit,
+          offset: offset,
           created_at: 'desc',
         }
       });
