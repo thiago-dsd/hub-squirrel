@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { ContactControllerService } from './controller/contacts-controller.service';
 import { MessagingProduct } from './entity/messaging-product.entity';
 import { CommonModule } from '@angular/common';
@@ -24,6 +24,7 @@ export class ContactsComponent {
   conversations: Conversation[] = [];
   currentConversation: Conversation | null = null;
   conversationHistory: Message[] = [];
+  @ViewChild('chatContainer') private chatContainer!: ElementRef;
   private wsSubscription: Subscription | undefined;
 
   constructor(
@@ -38,6 +39,7 @@ export class ContactsComponent {
       (message: Message) => {
         console.log('Nova mensagem recebida via WebSocket: ', message);
           this.conversationHistory.push(message);
+          this.scrollToBottom();
       },
       (error) => {
         console.error('Erro no WebSocket: ', error);
@@ -92,6 +94,7 @@ export class ContactsComponent {
       const response = await this.auth.getConversationHistory(idToUse);
       console.log('conversationHistory in components.ts = ', response.length);
       this.conversationHistory = response;
+      this.scrollToBottom();
     } catch (error) {
       console.error('ContactsComponent.getConversationHistory()', error);
     } finally {
@@ -136,5 +139,16 @@ export class ContactsComponent {
     const hours = String(date.getHours()).padStart(2, '0');
     const minutes = String(date.getMinutes()).padStart(2, '0');
     return `${hours}:${minutes}`;
+  }
+
+  private scrollToBottom(): void {
+      setTimeout(() => {
+        // Auto scrolling.
+        this.chatContainer.nativeElement.scroll({
+            top: this.chatContainer.nativeElement.scrollHeight,
+            left: 0,
+            behavior: "smooth",
+        });
+    });
   }
 }

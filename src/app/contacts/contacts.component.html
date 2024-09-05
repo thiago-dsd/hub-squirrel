@@ -98,7 +98,7 @@
       </div>
 
       <!-- Área de Mensagens -->
-      <div class="flex-1 p-4 overflow-y-auto">
+      <div class="flex-1 p-4 overflow-y-auto" #chatContainer>
         <div class="space-y-3">
           <div *ngFor="let message of conversationHistory">
             <!-- Mensagem do Suporte -->
@@ -123,7 +123,7 @@
               <div
                 class="flex flex-col bg-secondary text-black p-3 rounded-lg max-w-xs"
               >
-                <p>{{ message.product_data?.text?.body }}</p>
+                <p>{{ message.receiver_data?.text?.body }}</p>
                 <p class="text-xs text-right text-gray-500">
                   {{ message.created_at | date: "HH:mm" }}
                 </p>
