@@ -43,6 +43,7 @@ export class ContactsComponent {
       (message: Message) => {
         console.log('Nova mensagem recebida via WebSocket: ', message);
           this.conversationHistory.push(message);
+          this.getConversations();
           this.scrollToBottom();
       },
       (error) => {
@@ -150,7 +151,7 @@ export class ContactsComponent {
 
       const response = await this.auth.sendMessage(message);
       const aux = this.currentConversation ? await this.getConversationHistory(this.currentConversation) : null;
-
+      this.getConversations();
     } catch (error) {
       console.error('ContactsComponent.sendMessage()', error);
     } finally {
