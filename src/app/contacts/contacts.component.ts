@@ -29,6 +29,7 @@ export class ContactsComponent {
   conversationHistory: Message[] = [];
   @ViewChild('chatContainer') private chatContainer!: ElementRef;
   @ViewChild('conversationsContainer') private conversationsContainer!: ElementRef;
+  @ViewChild('messageInput') private messageInput!: ElementRef<HTMLTextAreaElement>; 
   private wsSubscription: Subscription | undefined;
 
   constructor(
@@ -131,7 +132,7 @@ export class ContactsComponent {
     }
   }
 
-  async sendMessage(messageInput: string) {
+  async sendMessage(messageInput: HTMLTextAreaElement) {
     this.resetError();
     this.isLoading = true;
 
@@ -140,7 +141,7 @@ export class ContactsComponent {
         sender_data: {
           messaging_product: 'whatsapp',
           text: {
-            body: messageInput,
+            body: messageInput.value,
             preview_url: true,
           },
           to: this.currentConversation?.product_data?.from ?? '',
@@ -152,6 +153,8 @@ export class ContactsComponent {
       const response = await this.auth.sendMessage(message);
       const aux = this.currentConversation ? await this.getConversationHistory(this.currentConversation) : null;
       this.getConversations();
+
+      messageInput.value = '';
     } catch (error) {
       console.error('ContactsComponent.sendMessage()', error);
     } finally {

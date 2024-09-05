@@ -62,7 +62,7 @@ export class ContactControllerService {
       // console.log('My from_id: ', from_id);
       const {data: conversationHistory} = await this.http.get('message/conversation/messaging-product-contact/' + from_id, {
         params: {
-          limit: 100,
+          limit: 200,
           offset: 0,
           created_at: 'asc',
         },

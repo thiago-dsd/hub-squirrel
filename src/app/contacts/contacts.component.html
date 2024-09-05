@@ -139,7 +139,7 @@
       >
       <textarea
         placeholder="Digite sua mensagem..."
-        (keyup.enter)="sendMessage(messageInput.value)"
+        (keyup.enter)="sendMessage(messageInput)"
         class="flex-grow border rounded-lg p-2 mr-2 resize-y"
         #messageInput
         rows="1"  
@@ -147,7 +147,7 @@
     
         <button
           class="bg-white text-black py-2 px-4 rounded-lg"
-          (click)="sendMessage(messageInput.value)"
+          (click)="sendMessage(messageInput)"
         >
           Enviar
         </button>
