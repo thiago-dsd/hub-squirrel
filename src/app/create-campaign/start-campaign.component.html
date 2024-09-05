@@ -4,9 +4,10 @@
     <div class="w-4"></div>
     <div class="flex flex-col flex-grow">
       
-      <div class="flex flex-col h-full p-4 space-y-4 bg-secondary shadow-lg rounded-lg overflow-hidden">
+      <div class="flex flex-col h-full p-4 space-y-4 bg-secondary rounded-lg overflow-hidden">
         
         <h1 class="text-2xl font-semibold text-gray-800 mb-1">Gerenciamento de Campanhas</h1>
+        
         <div class="flex flex-col space-y-4 mb-4">
           <button 
             class="bg-primary text-white py-2 px-4 rounded-md hover:bg-gray-500"
@@ -19,20 +20,40 @@
             accept=".json" 
             #fileInput 
             class="hidden"
-            (change)="onFileSelected($event)" />
+            (change)="handleFileUpload($event)" />
           
           <span *ngIf="selectedFileName" class="text-gray-600">Arquivo Selecionado: <strong>{{ selectedFileName }}</strong></span>
         </div>
 
-        <div class="flex-grow bg-white text-gray-800 p-4 rounded-md overflow-auto">
-          <h2 class="text-xl font-semibold mb-2">Atualizações do Processo</h2>
-          <div *ngIf="isLoading" class="text-center text-gray-600">Carregando...</div>
-          <div *ngIf="!isLoading">
+        <!-- Exibição de erros e status -->
+        <div class="bg-white text-gray-800 p-4 rounded-md flex-grow overflow-auto flex flex-col border border-gray-300">
+
+          <!-- Mensagem de carregamento -->
+          <div *ngIf="isLoading" class="flex items-center justify-center flex-grow">
+            <div class="text-center">
+              <svg class="animate-spin h-24 w-24 text-primary mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0114.66-4.6l1.42-1.42A10 10 0 006 12h-2z"></path>
+              </svg>
+              <p class="text-xl font-semibold text-gray-700">Carregando...</p>
+            </div>
+          </div>
+        
+          <!-- Exibição de erros gerais -->
+          <div *ngIf="errorMessages.length > 0" class="p-3 bg-red-500 text-white rounded-md mb-2">
+            <strong>Erro:</strong>
+            <div *ngFor="let error of errorMessages">{{ error }}</div>
+          </div>
+        
+          <!-- Exibição de atualizações do processo -->
+          <div>
             <div *ngFor="let update of updates" class="p-3 bg-secondary text-gray-800 rounded-md mb-2">
               {{ update }}
             </div>
           </div>
         </div>
+        
+        
 
         <div class="flex flex-col space-y-4 mt-4">
           <button 
