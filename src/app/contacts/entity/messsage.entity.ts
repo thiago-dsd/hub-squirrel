@@ -21,7 +21,7 @@ export interface TextData {
   
   export interface Message {
     sender_data: SenderData | null;
-    product_data: ProductData | null; // Corrigido para refletir o JSON comentado
+    receiver_data: ProductData | null; // Corrigido para refletir o JSON comentado
     from_id: string;
     to_id: string;
     messaging_product_id: string;

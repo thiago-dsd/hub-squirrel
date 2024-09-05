@@ -16,7 +16,7 @@
                 <button class="bg-white text-black py-2 px-4 rounded-md text-xs">Não lidas</button>
             </div> -->
       <div class="h-3"></div>
-      <div class="space-y-3 overflow-y-auto overflow-x-hidden pr-2">
+      <div #conversationsContainer class="space-y-3 overflow-y-auto overflow-x-hidden pr-2">
         <div
           class="w-full h-20 bg-white rounded-md p-3 flex items-center space-x-3 "
           *ngFor="let conversation of conversations"
@@ -98,7 +98,7 @@
       </div>
 
       <!-- Área de Mensagens -->
-      <div class="flex-1 p-4 overflow-y-auto">
+      <div class="flex-1 p-4 overflow-y-auto" #chatContainer>
         <div class="space-y-3">
           <div *ngFor="let message of conversationHistory">
             <!-- Mensagem do Suporte -->
@@ -107,7 +107,7 @@
               class="flex justify-end"
             >
               <div
-                class="flex flex-col bg-primary text-white p-3 rounded-lg max-w-xs"
+                class="flex flex-col bg-primary text-white p-3 rounded-lg max-w-xs break-words whitespace-normal"
               >
                 <p>{{ message.sender_data?.text?.body }}</p>
                 <p class="text-xs text-right text-gray-500">
@@ -121,9 +121,9 @@
               class="flex justify-start"
             >
               <div
-                class="flex flex-col bg-secondary text-black p-3 rounded-lg max-w-xs"
+                class="flex flex-col bg-secondary text-black p-3 rounded-lg max-w-xs break-words whitespace-normal"
               >
-                <p>{{ message.product_data?.text?.body }}</p>
+                <p>{{ message.receiver_data?.text?.body }}</p>
                 <p class="text-xs text-right text-gray-500">
                   {{ message.created_at | date: "HH:mm" }}
                 </p>
@@ -139,7 +139,7 @@
       >
       <textarea
         placeholder="Digite sua mensagem..."
-        (keyup.enter)="sendMessage(messageInput.value)"
+        (keyup.enter)="sendMessage(messageInput)"
         class="flex-grow border rounded-lg p-2 mr-2 resize-y"
         #messageInput
         rows="1"  
@@ -147,7 +147,7 @@
     
         <button
           class="bg-white text-black py-2 px-4 rounded-lg"
-          (click)="sendMessage(messageInput.value)"
+          (click)="sendMessage(messageInput)"
         >
           Enviar
         </button>
