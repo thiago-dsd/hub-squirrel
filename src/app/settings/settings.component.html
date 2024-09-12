@@ -1,0 +1,35 @@
+<div class="h-screen w-screen overflow-hidden">
+    <div class="flex flex-row h-screen p-4 x-screen">
+        <app-menu></app-menu>
+        <div class="w-3"></div>
+        <div class="w-[350px] p-3 bg-secondary rounded-lg flex flex-col justify-between ">
+            <div class="flex flex-col space-y-3">
+                <div
+                    class="rounded-lg p-2 cursor-pointer"
+                    [ngClass]="{'bg-primary text-white': currentScreen === ScreenType.UpdateProfile, 'bg-white': currentScreen !== ScreenType.UpdateProfile}"
+                    (click)="switchScreen(ScreenType.UpdateProfile)"
+                    >
+                    Atualizar perfil
+                </div>
+
+                <div
+                    class="rounded-lg p-2 cursor-pointer"
+                    [ngClass]="{'bg-primary text-white': currentScreen === ScreenType.CreateUser, 'bg-white': currentScreen !== ScreenType.CreateUser}"
+                    (click)="switchScreen(ScreenType.CreateUser)"
+                    >
+                    Criar usuário
+                </div>
+            </div>
+            <div class="bg-white rounded-lg p-2">Sair</div>
+        </div>
+        <div class="w-3"></div>
+        <div class="flex-grow max-w-full bg-secondary rounded-lg flex flex-col p-4">
+            <div *ngIf="currentScreen === ScreenType.UpdateProfile" class="">
+                <p>Você está na tela de Atualizar Perfil.</p>
+            </div>
+            <div *ngIf="currentScreen === ScreenType.CreateUser" class="">
+                <p>Você está na tela de Criar usuário</p>
+            </div>
+        </div>
+    </div>
+</div>

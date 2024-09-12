@@ -4,6 +4,7 @@ import { CampaignsComponent } from './campaigns/campaigns.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { LoginComponent } from './login/login.component';
 import { StartCampaignComponent } from './create-campaign/start-campaign.component';
+import { SettingsComponent } from './settings/settings.component';
 
 export const routes: Routes = [
     {
@@ -25,6 +26,10 @@ export const routes: Routes = [
     {
         path: 'login',
         component: LoginComponent,
+    },
+    {
+        path: 'settings',
+        component: SettingsComponent,
     },
     {
         path: '',
