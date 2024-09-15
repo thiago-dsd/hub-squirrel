@@ -2,13 +2,13 @@
     <div class="flex flex-row h-screen p-4 x-screen">
         <app-menu></app-menu>
         <div class="w-3"></div>
-        <div class="w-[350px] p-3 bg-secondary rounded-lg flex flex-col justify-between ">
+        <div class="w-[350px] p-3 bg-secondary rounded-lg flex flex-col justify-between">
             <div class="flex flex-col space-y-3">
                 <div
                     class="rounded-lg p-2 cursor-pointer"
                     [ngClass]="{'bg-primary text-white': currentScreen === ScreenType.UpdateProfile, 'bg-white': currentScreen !== ScreenType.UpdateProfile}"
                     (click)="switchScreen(ScreenType.UpdateProfile)"
-                    >
+                >
                     Atualizar perfil
                 </div>
 
@@ -16,7 +16,7 @@
                     class="rounded-lg p-2 cursor-pointer"
                     [ngClass]="{'bg-primary text-white': currentScreen === ScreenType.CreateUser, 'bg-white': currentScreen !== ScreenType.CreateUser}"
                     (click)="switchScreen(ScreenType.CreateUser)"
-                    >
+                >
                     Criar usuário
                 </div>
             </div>
@@ -25,10 +25,47 @@
         <div class="w-3"></div>
         <div class="flex-grow max-w-full bg-secondary rounded-lg flex flex-col p-4">
             <div *ngIf="currentScreen === ScreenType.UpdateProfile" class="">
-                <p>Você está na tela de Atualizar Perfil.</p>
+                <form (ngSubmit)="updateCurrentUser()" #userForm="ngForm" class="space-y-4">
+                    <div>
+                        <label for="name" class="block font-medium">Nome:</label>
+                        <input id="name" name="name" type="text" [(ngModel)]="userName" required class="border p-2 rounded w-full" placeholder="Seu nome"/>
+                    </div>
+        
+                    <div>
+                        <label for="email" class="block font-medium">Email:</label>
+                        <input id="email" name="email" type="email" [(ngModel)]="userEmail" required class="border p-2 rounded w-full" placeholder="Seu email"/>
+                    </div>
+        
+                    <div>
+                        <label for="password" class="block font-medium">Senha:</label>
+                        <input id="password" name="password" type="text" [(ngModel)]="userPassword" class="border p-2 rounded w-full" placeholder="Nova senha (opcional)"
+                        />
+                    </div>
+                    <button type="submit" class="bg-primary text-white p-2 rounded hover:bg-primary-dark" [disabled]="isLoading"> Atualizar
+                    </button>
+                    <div *ngIf="error" class="bg-red-100 text-red-600 p-3 rounded mb-4">
+                        {{ error }}
+                    </div>
+                    <div *ngIf="isLoading" class="text-gray-600 mt-2">Atualizando...</div>
+                </form>
             </div>
-            <div *ngIf="currentScreen === ScreenType.CreateUser" class="">
-                <p>Você está na tela de Criar usuário</p>
+            <div *ngIf="currentScreen === ScreenType.CreateUser" class="space-y-4">
+                <form (ngSubmit)="createUser()" #userForm="ngForm" class="flex flex-col space-y-4">
+                    <div>
+                        <label for="email" class="block">Email:</label>
+                        <input id="email" name="email" type="email" [(ngModel)]="newUser.email" required class="border p-2 rounded w-full" />
+                    </div>
+                    <div>
+                        <label for="name" class="block">Nome:</label>
+                        <input id="name" name="name" type="text" [(ngModel)]="newUser.name" required class="border p-2 rounded w-full" />
+                    </div>
+                    <div>
+                        <label for="password" class="block">Senha:</label>
+                        <input id="password" name="password" type="password" [(ngModel)]="newUser.password" required class="border p-2 rounded w-full" />
+                    </div>
+                    <button type="submit" class="bg-primary text-white p-2 rounded">Criar Usuário</button>
+                    <div *ngIf="error" class="text-red-500 mt-2">{{ error }}</div>
+                </form>
             </div>
         </div>
     </div>
